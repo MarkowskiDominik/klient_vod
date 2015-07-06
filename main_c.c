@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     //Connect to remote server
     if (connect(sock, (struct sockaddr *) &server, sizeof (server)) < 0) {
         perror("connect");
-        //return EXIT_FAILURE;
+        return EXIT_FAILURE;
     }
     
     //keep communicating with server
