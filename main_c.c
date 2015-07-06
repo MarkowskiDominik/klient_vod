@@ -13,6 +13,7 @@
 
 #define PORT 1501
 #define ADDRESS "127.0.0.1"
+#define TRUE 1
 
 int main(int argc, char *argv[]) {
     int sock;
@@ -37,23 +38,19 @@ int main(int argc, char *argv[]) {
     }
     
     //keep communicating with server
-    while (1) {
-        printf("Enter message : ");
-        scanf("%s", message);
-
-        //Send some data
-        if (send(sock, message, strlen(message), 0) < 0) {
-            puts("Send failed");
-            return 1;
+    while (TRUE) {
+        //Send file name, argv[0]]
+        if (send(sock, message, strlen(argv[0]), 0) < 0) {
+            perror("send");
+            return EXIT_FAILURE;
         }
 
-        //Receive a reply from the server
+        //Receive a file from the server
         if (recv(sock, server_reply, 2000, 0) < 0) {
-            puts("recv failed");
-            break;
+            perror("recv");
+            return EXIT_FAILURE;
         }
-
-        puts("Server reply :");
+        
         puts(server_reply);
     }
 
